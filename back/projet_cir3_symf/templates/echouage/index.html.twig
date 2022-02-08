@@ -11,6 +11,10 @@
                 <th>Id</th>
                 <th>Date</th>
                 <th>Nombre</th>
+                <th>zone_id</th>
+                <th>zone libelle</th>
+                <th>espece_id</th>
+                <th>espece libelle</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +24,10 @@
                 <td>{{ echouage.id }}</td>
                 <td>{{ echouage.date }}</td>
                 <td>{{ echouage.nombre }}</td>
+                <td>{{ echouage.Zone.id }}</td>
+                <td>{{ echouage.Zone.zone }}</td>
+                <td>{{ echouage.Espece.id }}</td>
+                <td>{{ echouage.Espece.espece }}</td>
                 <td>
                     <a href="{{ path('echouage_show', {'id': echouage.id}) }}">show</a>
                     <a href="{{ path('echouage_edit', {'id': echouage.id}) }}">edit</a>
@@ -27,7 +35,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="7">Aucun enregistrement pour cette recheche.</td>
             </tr>
         {% endfor %}
         </tbody>
