@@ -11,8 +11,8 @@
 <div class="example-wrapper">
     <p>Critères de recherche :</p>
     <ul>
-        <li>zone.id = {{zone_id}}</li>
-        <li>espece.id = {{espece_id}}</li>
+        <li title="id = {{zone.id}}">zone : {{zone.zone}}</li>
+        <li title="id = {{espece.id}}">espece : {{espece.espece}}</li>
     </ul>
 </div>
 
@@ -20,27 +20,45 @@
     <thead>
         <tr>
             <th>Date</th>
+            <th>Zone</th>
             <th>Nombre</th>
-            <th>zone</th>
-            <th>espece</th>
-            <th>actions</th>
         </tr>
     </thead>
     <tbody>
     {% for resultat in resultats %}
-        <tr title="id = {{ resultat.id }}">
+        <tr>
             <td>{{ resultat.date }}</td>
-            <td>{{ resultat.nombre }}</td>
             <td>{{ resultat.zone }}</td>
-            <td>{{ resultat.espece }}</td>
-            <td>
-                <a href="{{ path('echouage_show', {'id': resultat.id}) }}">show</a>
-                <a href="{{ path('echouage_edit', {'id': resultat.id}) }}">edit</a>
-            </td>
+            <td>{{ resultat.nombre }}</td>
         </tr>
     {% else %}
         <tr>
-            <td colspan="4">Aucun enregistrement pour cette recheche.</td>
+            <td colspan="3">Aucun enregistrement pour cette recheche.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>zone</th>
+            <th>Min</th>
+            <th>Max</th>
+            <th>Moyenne</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for stat_zone in stats_zones %}
+        <tr>
+            <td>{{ stat_zone.zone }}</td>
+            <td>{{ stat_zone.min }}</td>
+            <td>{{ stat_zone.max }}</td>
+            <td>{{ stat_zone.avg|round(2) }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">Aucune statistique pour cette recheche.</td>
         </tr>
     {% endfor %}
     </tbody>
