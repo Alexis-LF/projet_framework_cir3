@@ -24,7 +24,7 @@ class EchouageRepository extends ServiceEntityRepository
     public function get_echouages_espece($espece_id ,$zone_id = 0 )
     {
         $requete = $this->createQueryBuilder('e')
-            ->select('e.date', 'z.zone', 'SUM(e.nombre) as nombre')
+            ->select('e.date', 'z.zone','z.id AS zone_id' , 'SUM(e.nombre) AS nombre')
             ->leftJoin(
                 Zone::class,
                 'z',
@@ -46,7 +46,7 @@ class EchouageRepository extends ServiceEntityRepository
                 ->setParameter('zone_id', $zone_id);
             }
             $requete = $requete
-            ->groupBy('e.date,z.zone')
+            ->groupBy('e.date,z.zone,zone_id')
             ->orderBy('e.date,z.zone', 'ASC')
             ->getQuery();
 
