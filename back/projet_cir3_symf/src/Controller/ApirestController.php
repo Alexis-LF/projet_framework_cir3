@@ -18,7 +18,7 @@ use App\Entity\Espece;
 class ApirestController extends AbstractController
 {
     /**
-     * @Route("", name="main")
+     * @Route("", name="api_index")
      */
     public function index(): Response
     {
