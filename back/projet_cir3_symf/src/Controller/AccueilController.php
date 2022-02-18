@@ -183,6 +183,10 @@ class AccueilController extends AbstractController
         foreach ($resultats_sql as $value) {
             array_push($resultats,(int)$value["nombre"]);
         }
+        if (count($resultats) == 0)
+        {
+            array_push($resultats,0);
+        }
         return $resultats;
     }
 }
