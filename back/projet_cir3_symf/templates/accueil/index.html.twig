@@ -9,23 +9,26 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/cir3/framework/projet/back/projet_cir3_symf/src/Controller/AccueilController.php'|file_link(0) }}">src/Controller/AccueilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/cir3/framework/projet/back/projet_cir3_symf/templates/accueil/index.html.twig'|file_link(0) }}">templates/accueil/index.html.twig</a></code></li>
-    </ul>
-</div>
-<div class="example-wrapper">
     <h2>Recherche d'une espèce</h2>
     <form action="{{ path('accueil_recherche') }}" method="get">
         <div class="combobox_part">
             <label for="zone">Zone</label><br>
             <select name="zone">
-                <option value="0">Toutes les zones</option>
+                <option value="0"
+                    {% if zone_select.id == 0 %}
+                        selected
+                    {% endif %}
+                >
+                    Toutes les zones
+                </option>
             {% for zone in zones %}
-                <option value="{{ zone.id }}">{{ zone.zone }}</option>
+                <option value="{{ zone.id }}"
+                    {% if zone_select.id == zone.id %}
+                        selected
+                    {% endif %}
+                >
+                    {{ zone.zone }}
+                </option>
             {% endfor %}
             </select>
         </div>
@@ -33,7 +36,13 @@
             <label for="espece">Espece</label><br>
             <select name="espece">
             {% for espece in especes %}
-                <option value="{{ espece.id }}">{{ espece.espece }}</option>
+                <option value="{{ espece.id }}"
+                    {% if espece_select.id == espece.id %}
+                        selected
+                    {% endif %}                
+                >
+                    {{ espece.espece }}
+                </option>
             {% endfor %}
             </select>
         </div>
@@ -41,6 +50,8 @@
             <input type="submit" value="Rechercher">
         </div>                
     </form> 
-    
 </div>
+
+{% block recherche %}{% endblock %}
+
 {% endblock %}

@@ -1,20 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'accueil/index.html.twig' %}
 
-{% block title %}Hello AccueilController!{% endblock %}
+{% block title %}Recherche de {{espece_select.espece}} dans {{zone_select.zone}}{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block recherche %}
 
-<div class="example-wrapper">
-    <p>Critères de recherche :</p>
-    <ul>
-        <li title="id = {{zone.id}}">zone : {{zone.zone}}</li>
-        <li title="id = {{espece.id}}">espece : {{espece.espece}}</li>
-    </ul>
-</div>
 
 <table class="table">
     <thead>

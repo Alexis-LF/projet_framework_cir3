@@ -21,9 +21,14 @@ class AccueilController extends AbstractController
         $especes = $em ->getRepository(Espece::class) ->findAll();
         $zones = $em ->getRepository(Zone::class) ->findAll();
         return $this->render('accueil/index.html.twig', [
-            'controller_name' => 'AccueilController',
             'zones' => $zones,
             'especes' => $especes,
+            'zone_select' => [
+                "id" => 0,
+            ],
+            'espece_select' => [
+                "id" => 1,
+            ],            
         ]);
     }
 
@@ -83,14 +88,18 @@ class AccueilController extends AbstractController
                     ->tab_stats_zones($tab_vals, $i)
             );
             $i++;
-        }   
+        }
 
+        $especes = $em ->getRepository(Espece::class) ->findAll();
+        $zones = $em ->getRepository(Zone::class) ->findAll();
         return $this->render('accueil/recherche.html.twig', [
-            'zone' => [
+            'zones' => $zones,
+            'especes' => $especes,
+            'zone_select' => [
                 "id" => $zone_id,
                 "zone" => $zone
             ],
-            'espece' => [
+            'espece_select' => [
                 "id" => $espece_id,
                 "espece" => $espece
             ],
