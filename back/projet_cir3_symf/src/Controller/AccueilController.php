@@ -47,7 +47,7 @@ class AccueilController extends AbstractController
             ]);
         }
 
-        $nb_zones = $em ->getRepository(Zone::Class) ->get_nb_zones();
+        $nb_zones = $em ->getRepository(Zone::Class) ->get_count();
         $espece = $em ->getRepository(Espece::class) ->get_nom($espece_id);
         $zone = "toutes zones";
         if ($zone_id != 0)
