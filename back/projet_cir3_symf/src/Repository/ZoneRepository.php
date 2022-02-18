@@ -19,6 +19,16 @@ class ZoneRepository extends ServiceEntityRepository
         parent::__construct($registry, Zone::class);
     }
 
+    public function get_nb_zones()
+    {
+        return $this->createQueryBuilder('z')
+            ->select('count(:c)')
+            ->setParameter('c', "*")
+            ->getQuery()
+            ->getResult()[0][1];
+    }
+
+
     // /**
     //  * @return Zone[] Returns an array of Zone objects
     //  */

@@ -34,7 +34,7 @@ class AccueilController extends AbstractController
     /**
      * @Route("/recherche", name="accueil_recherche")
      */
-    public function recherche(EntityManagerInterface $entityManager): Response
+    public function recherche(EntityManagerInterface $em): Response
     {
         // On vérifie l'URI
         $zone_id = $_GET["zone"];
@@ -45,23 +45,18 @@ class AccueilController extends AbstractController
                 'erreur_description' => "Les identifiants dans l'URL pour la zone ou pour l'espece ne sont pas des nombres",
             ]);
         }
-        $nb_zones = $entityManager -> createQueryBuilder("z")
-        ->select('count(:c)')
-        ->from(Zone::class,"z")
-        ->setParameter('c', "*")
-        ->getQuery()
-        ->getResult()[0][1];
+        $nb_zones = $em -> getRepository(Zone::Class) -> get_nb_zones();
 
 
         // Récupération des noms des zones / espèces
-        $espece = $entityManager
+        $espece = $em
         ->getRepository(Espece::class)
         ->find($espece_id)
         ->getEspece();
         $zone = "toutes zones";
         if ($zone_id != 0)
         {
-            $zone = $entityManager
+            $zone = $em
             ->getRepository(Zone::class)
             ->find($zone_id)
             ->getZone();
@@ -72,7 +67,7 @@ class AccueilController extends AbstractController
         // création de la requête
         // affichage du nb d'animaux d'une espèce particulière
         // par date et par zone
-        $requete = $entityManager -> createQueryBuilder("e")
+        $requete = $em -> createQueryBuilder("e")
         ->select('e.date', 'z.zone', 'SUM(e.nombre) as nombre')
         ->from(Echouage::class, 'e')
         ->leftJoin(
@@ -119,7 +114,7 @@ class AccueilController extends AbstractController
         {
             array_push(
                 $stats_par_zones, 
-                $this -> tab_stats_zones($entityManager, $espece_id, $i)
+                $this -> tab_stats_zones($em, $espece_id, $i)
             );
             $i++;
         }   
