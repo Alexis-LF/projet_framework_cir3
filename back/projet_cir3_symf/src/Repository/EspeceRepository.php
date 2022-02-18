@@ -19,6 +19,10 @@ class EspeceRepository extends ServiceEntityRepository
         parent::__construct($registry, Espece::class);
     }
 
+    public function get_nom($espece_id)
+    {
+        return $this-> find($espece_id) ->getEspece();
+    }
     // /**
     //  * @return Espece[] Returns an array of Espece objects
     //  */

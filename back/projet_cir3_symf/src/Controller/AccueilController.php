@@ -16,14 +16,10 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil_index")
      */
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $em): Response
     {
-        $especes = $entityManager
-            ->getRepository(Espece::class)
-            ->findAll();
-        $zones = $entityManager
-            ->getRepository(Zone::class)
-            ->findAll();
+        $especes = $em ->getRepository(Espece::class) ->findAll();
+        $zones = $em ->getRepository(Zone::class) ->findAll();
         return $this->render('accueil/index.html.twig', [
             'controller_name' => 'AccueilController',
             'zones' => $zones,
@@ -49,17 +45,11 @@ class AccueilController extends AbstractController
 
 
         // Récupération des noms des zones / espèces
-        $espece = $em
-        ->getRepository(Espece::class)
-        ->find($espece_id)
-        ->getEspece();
+        $espece = $em ->getRepository(Espece::class) ->get_nom($espece_id);
         $zone = "toutes zones";
         if ($zone_id != 0)
         {
-            $zone = $em
-            ->getRepository(Zone::class)
-            ->find($zone_id)
-            ->getZone();
+            $zone = $em ->getRepository(Zone::class) ->get_nom($zone_id);
         }
 
         

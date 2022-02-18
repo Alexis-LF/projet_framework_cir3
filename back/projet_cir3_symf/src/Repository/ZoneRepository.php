@@ -28,7 +28,10 @@ class ZoneRepository extends ServiceEntityRepository
             ->getResult()[0][1];
     }
 
-
+    public function get_nom($zone_id)
+    {
+        return $this-> find($zone_id) ->getZone();
+    }
     // /**
     //  * @return Zone[] Returns an array of Zone objects
     //  */
