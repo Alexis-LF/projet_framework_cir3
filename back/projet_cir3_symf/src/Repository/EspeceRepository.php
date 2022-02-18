@@ -23,6 +23,45 @@ class EspeceRepository extends ServiceEntityRepository
     {
         return $this-> find($espece_id) ->getEspece();
     }
+
+    public function get_count()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('count(:c)')
+            ->setParameter('c', "*")
+            ->getQuery()
+            ->getResult()[0][1];
+    }
+    
+    public function get($espece_id = 0)
+    {
+        $especes = array();
+        if ($espece_id == 0)
+        {
+            // toutes espèces sélectionnées
+            $i = 1;
+            $derniere_espece = $this ->get_count();
+        }
+        else
+        {
+            $i = $espece_id;
+            $derniere_espece = $espece_id;
+        }
+        while($i <= $derniere_espece)
+        {
+            array_push(
+                $especes,
+                $this->createQueryBuilder('s')
+                ->select('s.id','s.espece')
+                ->where('s.id=:espece_id')   
+                ->setParameter('espece_id', $i)
+                ->getQuery()
+                ->getResult()            
+            );
+            $i++;
+        }
+        return $especes;
+    }     
     // /**
     //  * @return Espece[] Returns an array of Espece objects
     //  */

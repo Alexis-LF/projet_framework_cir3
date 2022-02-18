@@ -19,7 +19,7 @@ class ZoneRepository extends ServiceEntityRepository
         parent::__construct($registry, Zone::class);
     }
 
-    public function get_nb_zones()
+    public function get_count()
     {
         return $this->createQueryBuilder('z')
             ->select('count(:c)')
@@ -42,6 +42,36 @@ class ZoneRepository extends ServiceEntityRepository
             "avg" => array_sum($tab_vals)/count($tab_vals)
         ];        
     }
+
+    public function get($zone_id = 0)
+    {
+        $zones = array();
+        if ($zone_id == 0)
+        {
+            // toutes zones sélectionnées
+            $i = 1;
+            $derniere_zone = $this ->get_count();
+        }
+        else
+        {
+            $i = $zone_id;
+            $derniere_zone = $zone_id;
+        }
+        while($i <= $derniere_zone)
+        {
+            array_push(
+                $zones,
+                $this->createQueryBuilder('z')
+                ->select('z.id','z.zone')
+                ->where('z.id=:zone_id')   
+                ->setParameter('zone_id', $i)
+                ->getQuery()
+                ->getResult()            
+            );
+            $i++;
+        }
+        return $zones;
+    }    
    
     // /**
     //  * @return Zone[] Returns an array of Zone objects
