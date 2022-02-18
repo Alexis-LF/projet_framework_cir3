@@ -32,6 +32,17 @@ class ZoneRepository extends ServiceEntityRepository
     {
         return $this-> find($zone_id) ->getZone();
     }
+
+    public function tab_stats_zones($tab_vals, $zone_id)
+    {
+        return [
+            "zone" => $this ->get_nom($zone_id),
+            "min" => min($tab_vals),
+            "max" => max($tab_vals),
+            "avg" => array_sum($tab_vals)/count($tab_vals)
+        ];        
+    }
+   
     // /**
     //  * @return Zone[] Returns an array of Zone objects
     //  */

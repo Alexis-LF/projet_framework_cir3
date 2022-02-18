@@ -41,53 +41,24 @@ class AccueilController extends AbstractController
                 'erreur_description' => "Les identifiants dans l'URL pour la zone ou pour l'espece ne sont pas des nombres",
             ]);
         }
-        $nb_zones = $em -> getRepository(Zone::Class) -> get_nb_zones();
 
-
-        // Récupération des noms des zones / espèces
+        $nb_zones = $em ->getRepository(Zone::Class) ->get_nb_zones();
         $espece = $em ->getRepository(Espece::class) ->get_nom($espece_id);
         $zone = "toutes zones";
         if ($zone_id != 0)
         {
             $zone = $em ->getRepository(Zone::class) ->get_nom($zone_id);
-        }
+        }        
 
-        
-
-        // création de la requête
+        // 1re requête
         // affichage du nb d'animaux d'une espèce particulière
         // par date et par zone
-        $requete = $em -> createQueryBuilder("e")
-        ->select('e.date', 'z.zone', 'SUM(e.nombre) as nombre')
-        ->from(Echouage::class, 'e')
-        ->leftJoin(
-            Zone::class,
-            'z',
-            \Doctrine\ORM\Query\Expr\Join::WITH,
-            'e.zone = z.id'
-        )
-        ->leftJoin(
-            Espece::class,
-            's',
-            \Doctrine\ORM\Query\Expr\Join::WITH,
-            'e.espece = s.id'
-        )
-        ->where('s.id=:espece_id')   
-        ->setParameter('espece_id', $espece_id);
-        if ($zone_id != 0)
-        {
-            $requete = $requete 
-            ->andWhere('z.id=:zone_id')   
-            ->setParameter('zone_id', $zone_id);
-        }
-        $requete = $requete
-        ->groupBy('e.date,z.zone')
-        ->orderBy('e.date,z.zone', 'ASC')
-        ->getQuery();
-        $resultats = $requete->getResult();
+        $resultats = $em ->getRepository(Echouage::class) 
+            ->get_echouages_espece($espece_id ,$zone_id);
+        
 
         // 2nde requête
-        // récupération d'un tableau de nombres pour chaque zone
+        // stats des zones
         $stats_par_zones = array();
         if ($zone_id == 0)
         {
@@ -102,9 +73,14 @@ class AccueilController extends AbstractController
         }
         while($i <= $derniere_zone)
         {
+            // récupération d'un tableau de nombres pour chaque zone
+            $tab_vals = $em ->getRepository(Echouage::class) 
+                ->get_nb_espece_dans_zone($espece_id, $i);
             array_push(
                 $stats_par_zones, 
-                $this -> tab_stats_zones($em, $espece_id, $i)
+                // récupération des statistiques du tableau
+                $em ->getRepository(Zone::class) 
+                    ->tab_stats_zones($tab_vals, $i)
             );
             $i++;
         }   
@@ -121,57 +97,5 @@ class AccueilController extends AbstractController
             'resultats' => $resultats,
             'stats_zones' => $stats_par_zones,
         ]);
-    }
-
-    public function tab_stats_zones($entityManager, $espece_id, $zone_id)
-    {
-    
-        $tab_vals = $this -> liste_nb_dans_zone($entityManager, $espece_id, $zone_id);
-        return [
-            "zone" => $entityManager
-                ->getRepository(Zone::class)
-                ->find($zone_id)
-                ->getZone(),
-            "min" => min($tab_vals),
-            "max" => max($tab_vals),
-            "avg" => array_sum($tab_vals)/count($tab_vals)
-        ];
-    }
-
-    public function liste_nb_dans_zone($entityManager, $espece_id, $zone_id)
-    {
-        $requete = $entityManager -> createQueryBuilder("e")
-        ->select('SUM(e.nombre) as nombre')
-        ->from(Echouage::class, 'e')
-        ->leftJoin(
-            Zone::class,
-            'z',
-            \Doctrine\ORM\Query\Expr\Join::WITH,
-            'e.zone = z.id'
-        )
-        ->leftJoin(
-            Espece::class,
-            's',
-            \Doctrine\ORM\Query\Expr\Join::WITH,
-            'e.espece = s.id'
-        )
-        ->where('s.id=:espece_id')   
-        ->setParameter('espece_id', $espece_id)
-        ->andWhere('z.id=:zone_id')   
-        ->setParameter('zone_id', $zone_id)
-        ->groupBy('e.date,z.zone')
-        ->orderBy('nombre', 'ASC')
-        ->getQuery();
-
-        $resultats_sql = $requete->getResult();
-        $resultats = array();
-        foreach ($resultats_sql as $value) {
-            array_push($resultats,(int)$value["nombre"]);
-        }
-        if (count($resultats) == 0)
-        {
-            array_push($resultats,0);
-        }
-        return $resultats;
     }
 }
