@@ -60,32 +60,9 @@ class AccueilController extends AbstractController
         // affichage du nb d'animaux d'une espèce particulière
         // par date et par zone
 
-        $tab_par_dates = array();
-        if ($zone_id == 0)
-        {
-            $zone_init = 1;
-            $derniere_zone = $nb_zones;
-        }
-        else
-        {
-            $zone_init = $zone_id;
-            $derniere_zone = $zone_id;
-        }
-        $min = $em ->getRepository(Echouage::class) ->date_min($espece_id);
-        $max = $em ->getRepository(Echouage::class) ->date_max($espece_id);
-        for ($date_i=$min; $date_i <= $max; $date_i++) 
-        {
-            $nb_echouages_par_zone = array();
-            $zone_i = $zone_init;
-            while($zone_i <= $derniere_zone )
-            {
-                $nb_echouages_par_zone[$zone_i] = $em 
-                    ->getRepository(Echouage::class) 
-                    ->get_nb_date_zone($espece_id,$zone_i,$date_i);
-                $zone_i++;
-            }
-            $tab_par_dates[$date_i] = $nb_echouages_par_zone;
-        }
+        $tab_par_dates = $em 
+            ->getRepository(Echouage::class) 
+            ->get_tab_dates_zone($espece_id,$zone_id,$nb_zones);
 
 
         // 2nde requête

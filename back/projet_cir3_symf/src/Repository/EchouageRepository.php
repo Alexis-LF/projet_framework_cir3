@@ -127,46 +127,6 @@ class EchouageRepository extends ServiceEntityRepository
     {
         return $this->tab_dates($espece_id, "DESC")[0]["date"];  
     }    
-    
-    public function get_tab_date_zone($espece_id,$zone_id)
-    {
-        $tab = array();
-        $min = $this ->date_min($espece_id);
-        $max = $this ->date_max($espece_id);
-        for ($i=$min; $i <= $max; $i++) 
-        { 
-            $nb_echouages = (int)$this->createQueryBuilder('e')
-                ->select('SUM(e.nombre) AS nombre')
-                ->leftJoin(
-                    Zone::class,
-                    'z',
-                    \Doctrine\ORM\Query\Expr\Join::WITH,
-                    'e.zone = z.id'
-                )
-                ->leftJoin(
-                    Espece::class,
-                    's',
-                    \Doctrine\ORM\Query\Expr\Join::WITH,
-                    'e.espece = s.id'
-                )
-                ->where('s.id=:espece_id')   
-                ->setParameter('espece_id', $espece_id)
-                ->andWhere('z.id=:zone_id')   
-                ->setParameter('zone_id', $zone_id)
-                ->andWhere('e.date=:date')   
-                ->setParameter('date', $i)            
-                ->getQuery()
-                ->getResult()[0]["nombre"];
-            array_push(
-                $tab,
-                [
-                    "date" => $i,
-                    "nombre" => $nb_echouages
-                ]
-            );
-        }
-        return $tab;
-    }
 
     public function get_nb_date_zone($espece_id,$zone_id,$date)
     {
@@ -192,6 +152,39 @@ class EchouageRepository extends ServiceEntityRepository
             ->setParameter('date', $date)
             ->getQuery()
             ->getResult()[0]["nombre"];
+    }
+
+    public function get_tab_dates_zone($espece_id,$zone_id,$nb_zones,$min = NULL,$max = NULL)
+    {
+        $tab_par_dates = array();
+        if ($zone_id == 0)
+        {
+            $zone_init = 1;
+            $derniere_zone = $nb_zones;
+        }
+        else
+        {
+            $zone_init = $zone_id;
+            $derniere_zone = $zone_id;
+        }
+        if ($min == NULL)
+        {
+            $min = $this ->date_min($espece_id);
+        }
+        $max = $this ->date_max($espece_id);
+        for ($date_i=$min; $date_i <= $max; $date_i++) 
+        {
+            $nb_echouages_par_zone = array();
+            $zone_i = $zone_init;
+            while($zone_i <= $derniere_zone )
+            {
+                $nb_echouages_par_zone[$zone_i] = $this 
+                    ->get_nb_date_zone($espece_id,$zone_i,$date_i);
+                $zone_i++;
+            }
+            $tab_par_dates[$date_i] = $nb_echouages_par_zone;
+        }
+        return $tab_par_dates;
     }
 
 
