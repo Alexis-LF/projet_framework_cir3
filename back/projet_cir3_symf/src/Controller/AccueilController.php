@@ -62,7 +62,7 @@ class AccueilController extends AbstractController
 
         $tab_par_dates = $em 
             ->getRepository(Echouage::class) 
-            ->get_tab_dates_zone($espece_id,$zone_id,$nb_zones);
+            ->get_tab_dates_zone($espece_id,$nb_zones,$zone_id);
 
 
         // 2nde requête
