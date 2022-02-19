@@ -178,9 +178,6 @@ class ApirestController extends AbstractController
     {
         $data = $em ->getRepository(Echouage::Class)
                     ->get_tab_dates_zone($espece_id,4,0);
-        // echo "<pre> data :";
-        // var_dump($data);
-        // echo "</pre>";
         $response = new Response();
         $response->setContent(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
@@ -211,9 +208,6 @@ class ApirestController extends AbstractController
     {
         $data = $em ->getRepository(Echouage::Class)
                     ->get_tab_dates_zone($espece_id,4,0,$min,$max);
-        // echo "<pre> data :";
-        // var_dump($data);
-        // echo "</pre>";
         $response = new Response();
         $response->setContent(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
@@ -223,15 +217,12 @@ class ApirestController extends AbstractController
 
     
     /**
-     * @Route("/echouages/espece/{espece_id}/zone/{zone_id}/date/{min}/{max}", name="echouages_select_dates_zones")
+     * @Route("/echouages/espece/{espece_id}/zone/{zone_id}/date/{min}/{max}", name="echouages_select_dates_zone")
      */
     public function echouages_select_dates_zone($espece_id,$zone_id,$min,$max,EntityManagerInterface $em): Response
     {
         $data = $em ->getRepository(Echouage::Class)
                     ->get_tab_dates_zone($espece_id,4,$zone_id,$min,$max);
-        // echo "<pre> data :";
-        // var_dump($data);
-        // echo "</pre>";
         $response = new Response();
         $response->setContent(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
