@@ -176,8 +176,9 @@ class ApirestController extends AbstractController
      */
     public function echouages_dates_zones($espece_id,EntityManagerInterface $em): Response
     {
+        $nb_zones = $em ->getRepository(Zone::Class) ->get_count();
         $data = $em ->getRepository(Echouage::Class)
-                    ->get_tab_dates_zone($espece_id,4,0);
+                    ->get_tab_dates_zone($espece_id,$nb_zones,0);
         $response = new Response();
         $response->setContent(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
@@ -190,8 +191,9 @@ class ApirestController extends AbstractController
      */
     public function echouages_dates_zone($espece_id, $zone_id, EntityManagerInterface $em): Response
     {
+        $nb_zones = $em ->getRepository(Zone::Class) ->get_count();
         $data = $em ->getRepository(Echouage::Class)
-                    ->get_tab_dates_zone($espece_id,4,$zone_id);
+                    ->get_tab_dates_zone($espece_id,$nb_zones,$zone_id);
 
         $response = new Response();
         $response->setContent(json_encode($data));
@@ -206,8 +208,9 @@ class ApirestController extends AbstractController
      */
     public function echouages_select_dates_zones($espece_id,$min,$max,EntityManagerInterface $em): Response
     {
+    $nb_zones = $em ->getRepository(Zone::Class) ->get_count();
         $data = $em ->getRepository(Echouage::Class)
-                    ->get_tab_dates_zone($espece_id,4,0,$min,$max);
+                    ->get_tab_dates_zone($espece_id,$nb_zones,0,$min,$max);
         $response = new Response();
         $response->setContent(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
@@ -221,8 +224,9 @@ class ApirestController extends AbstractController
      */
     public function echouages_select_dates_zone($espece_id,$zone_id,$min,$max,EntityManagerInterface $em): Response
     {
+        $nb_zones = $em ->getRepository(Zone::Class) ->get_count();
         $data = $em ->getRepository(Echouage::Class)
-                    ->get_tab_dates_zone($espece_id,4,$zone_id,$min,$max);
+                    ->get_tab_dates_zone($espece_id,$nb_zones,$zone_id,$min,$max);
         $response = new Response();
         $response->setContent(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
