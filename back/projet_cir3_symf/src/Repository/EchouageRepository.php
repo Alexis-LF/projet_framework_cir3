@@ -89,9 +89,9 @@ class EchouageRepository extends ServiceEntityRepository
         return $resultats;
     }
 
-    public function date_min($espece_id)
+    public function tab_dates($espece_id, $order_by)
     {
-        return $this->createQueryBuilder('e')
+        $resultat = $this->createQueryBuilder('e')
         ->select('e.date')
         ->leftJoin(
             Espece::class,
@@ -101,26 +101,30 @@ class EchouageRepository extends ServiceEntityRepository
         )
         ->where('s.id=:espece_id')   
         ->setParameter('espece_id', $espece_id)
-        ->orderBy('e.date', 'ASC')
+        ->orderBy('e.date', $order_by)
         ->getQuery()
-        ->getResult()[0]["date"];      
+        ->getResult();
+        
+        if (count($resultat) == 0)
+        {
+            return array
+            (
+                [
+                    "date" => 0,
+                ]
+            );
+        }
+        return $resultat;
+    }    
+
+    public function date_min($espece_id)
+    {
+        return $this->tab_dates($espece_id, "ASC")[0]["date"];
     }
 
     public function date_max($espece_id)
     {
-        return $this->createQueryBuilder('e')
-        ->select('e.date')
-        ->leftJoin(
-            Espece::class,
-            's',
-            \Doctrine\ORM\Query\Expr\Join::WITH,
-            'e.espece = s.id'
-        )
-        ->where('s.id=:espece_id')   
-        ->setParameter('espece_id', $espece_id)
-        ->orderBy('e.date', 'DESC')
-        ->getQuery()
-        ->getResult()[0]["date"];      
+        return $this->tab_dates($espece_id, "DESC")[0]["date"];  
     }    
     
     public function get_tab_date_zone($espece_id,$zone_id)
