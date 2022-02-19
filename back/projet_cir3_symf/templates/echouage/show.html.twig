@@ -24,12 +24,12 @@
                 <td>{{ echouage.Zone.zone }}</td>
             </tr>
             <tr title="id de {{ echouage.Espece.espece }} = {{ echouage.Espece.id }}">
-                <th>Espece</th>
+                <th>Espèce</th>
                 <td>{{ echouage.Espece.espece }}</td>
             </tr>                                    
         </tbody>
     </table></div>
-    <a href="{{ path('echouage_index') }}">back to list</a>
+    <a href="{{ path('echouage_index') }}">retour à la liste</a>
 
     <a href="{{ path('echouage_edit', {'id': echouage.id}) }}">modifier</a>
 

@@ -3,7 +3,7 @@
 {% block title %}Espece{% endblock %}
 
 {% block body %}
-    <h1>Espece</h1>
+    <h1>Espèce</h1>
 
     <div class="table"><table>
         <tbody>
@@ -12,13 +12,13 @@
                 <td>{{ espece.id }}</td>
             </tr>
             <tr>
-                <th>Espece</th>
+                <th>Espèce</th>
                 <td>{{ espece.espece }}</td>
             </tr>
         </tbody>
     </table></div>
 
-    <a href="{{ path('espece_index') }}">back to list</a>
+    <a href="{{ path('espece_index') }}">retour à la liste</a>
 
     <a href="{{ path('espece_edit', {'id': espece.id}) }}">modifier</a>
 

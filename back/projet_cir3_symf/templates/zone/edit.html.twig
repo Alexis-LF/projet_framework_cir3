@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Zone{% endblock %}
+{% block title %}Modifier la Zone{% endblock %}
 
 {% block body %}
-    <h1>Edit Zone</h1>
+    <h1>Modifier la Zone</h1>
 
-    {{ include('zone/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('zone/_form.html.twig', {'button_label': 'appliquer'}) }}
 
-    <a href="{{ path('zone_index') }}">back to list</a>
+    <a href="{{ path('zone_index') }}">retour à la liste</a>
 
     {{ include('zone/_delete_form.html.twig') }}
 {% endblock %}
