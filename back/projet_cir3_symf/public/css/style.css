@@ -3,6 +3,7 @@ body {
     font-family: sans-serif;
     height: 100vh;
     margin: 0%;
+    background-color: #d84fcd;
     
 }
 
@@ -27,15 +28,14 @@ background-color: #95a5a6;
 font-size: 14px;
 letter-spacing: 0.03em;
 }
-table tr {
-border: 3px solid black;
-}
+
+
 table td, table th {
 padding: 10px;
 text-align: center;
 }
 
-select , input[type = submit] , a , button{
+select , input[type = submit] , #contenu a , header a , button{
     height: 2.2em;
     margin: 2px;
     padding: 0.3em 0.6em;
@@ -70,7 +70,11 @@ header {
 }
 footer {
     position: relative;
-    bottom: O%;
+    bottom: 0%;
+
+}
+footer a {
+    text-decoration : none;
 
 }
 header , footer {
@@ -88,4 +92,8 @@ header , footer {
 }
 .combobox_part {
     margin: 5px;
+}
+
+#mon_mot {
+    text-decoration: underline;
 }
