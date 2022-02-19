@@ -36,8 +36,8 @@ text-align: center;
 }
 
 select , input[type = submit] , #contenu a , header a , button{
-    height: 2.2em;
-    margin: 2px;
+    display: inline-block;
+    /* height: 2.2em; */
     padding: 0.3em 0.6em;
     background: white;
     border: 1px solid #aaaaaa;
@@ -47,6 +47,7 @@ select , input[type = submit] , #contenu a , header a , button{
     white-space: nowrap; 
     text-decoration: none;
     color: black;
+    margin: 1px 2px;
 }
 button {
     display: inline;
