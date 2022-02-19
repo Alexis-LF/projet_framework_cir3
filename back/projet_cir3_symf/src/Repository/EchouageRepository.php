@@ -171,7 +171,10 @@ class EchouageRepository extends ServiceEntityRepository
         {
             $min = $this ->date_min($espece_id);
         }
-        $max = $this ->date_max($espece_id);
+        if ($max == NULL)
+        {
+            $max = $this ->date_max($espece_id);
+        }        
         for ($date_i=$min; $date_i <= $max; $date_i++) 
         {
             $nb_echouages_par_zone = array();
