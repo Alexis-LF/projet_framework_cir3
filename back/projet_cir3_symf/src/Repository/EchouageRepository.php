@@ -154,7 +154,7 @@ class EchouageRepository extends ServiceEntityRepository
             ->getResult()[0]["nombre"];
     }
 
-    public function get_tab_dates_zone($espece_id,$zone_id,$nb_zones,$min = NULL,$max = NULL)
+    public function get_tab_dates_zone($espece_id,$nb_zones,$zone_id,$min = NULL,$max = NULL)
     {
         $tab_par_dates = array();
         if ($zone_id == 0)

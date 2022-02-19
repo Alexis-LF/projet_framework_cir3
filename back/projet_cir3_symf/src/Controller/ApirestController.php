@@ -27,8 +27,12 @@ class ApirestController extends AbstractController
             "liste des endpoints" =>
             [
                 "/api",
-                "/echouages_espece/{espece_id}",
-                "/echouages_espece/{espece_id}/zone/{zone_id}",
+                "/echouages/espece/{espece_id}",
+                "/echouages/espece/{espece_id}/zone/{zone_id}",
+                "/echouages/espece/{espece_id}/zones/date",
+                "/echouages/espece/{espece_id}/zone/{zone_id}/date",
+                "/echouages/espece/{espece_id}/zones/date/{min}/{max}",
+                "/echouages/espece/{espece_id}/zone/{zone_id}/date/{min}/{max}",
                 "/espece/",
                 "/espece/{espece_id}",
                 "/espece/{espece_id}/date/",
@@ -46,7 +50,7 @@ class ApirestController extends AbstractController
     }
 
     /**
-     * @Route("/echouages_espece/{espece_id}", name="echouages_espece")
+     * @Route("/echouages/espece/{espece_id}", name="echouages_espece")
      */
     public function echouages_espece($espece_id, EntityManagerInterface $em): Response
     {
@@ -62,7 +66,7 @@ class ApirestController extends AbstractController
 
 
     /**
-     * @Route("/echouages_espece/{espece_id}/zone/{zone_id}", name="echouages_espece_zone")
+     * @Route("/echouages/espece/{espece_id}/zone/{zone_id}", name="echouages_espece_zone")
      */
     public function echouages_espece_zone($espece_id, $zone_id, EntityManagerInterface $em): Response
     {
@@ -166,4 +170,72 @@ class ApirestController extends AbstractController
         $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
     }  
+
+    /**
+     * @Route("/echouages/espece/{espece_id}/zones/date", name="echouages_dates_zones")
+     */
+    public function echouages_dates_zones($espece_id,EntityManagerInterface $em): Response
+    {
+        $data = $em ->getRepository(Echouage::Class)
+                    ->get_tab_dates_zone($espece_id,4,0);
+        // echo "<pre> data :";
+        // var_dump($data);
+        // echo "</pre>";
+        $response = new Response();
+        $response->setContent(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    }
+
+    /**
+     * @Route("/echouages/espece/{espece_id}/zone/{zone_id}/date", name="echouages_dates_zone")
+     */
+    public function echouages_dates_zone($espece_id, $zone_id, EntityManagerInterface $em): Response
+    {
+        $data = $em ->getRepository(Echouage::Class)
+                    ->get_tab_dates_zone($espece_id,4,$zone_id);
+
+        $response = new Response();
+        $response->setContent(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    }
+
+    
+    /**
+     * @Route("/echouages/espece/{espece_id}/zones/date/{min}/{max}", name="echouages_select_dates_zones")
+     */
+    public function echouages_select_dates_zones($espece_id,$min,$max,EntityManagerInterface $em): Response
+    {
+        $data = $em ->getRepository(Echouage::Class)
+                    ->get_tab_dates_zone($espece_id,4,0,$min,$max);
+        // echo "<pre> data :";
+        // var_dump($data);
+        // echo "</pre>";
+        $response = new Response();
+        $response->setContent(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    }
+
+    
+    /**
+     * @Route("/echouages/espece/{espece_id}/zone/{zone_id}/date/{min}/{max}", name="echouages_select_dates_zones")
+     */
+    public function echouages_select_dates_zone($espece_id,$zone_id,$min,$max,EntityManagerInterface $em): Response
+    {
+        $data = $em ->getRepository(Echouage::Class)
+                    ->get_tab_dates_zone($espece_id,4,$zone_id,$min,$max);
+        // echo "<pre> data :";
+        // var_dump($data);
+        // echo "</pre>";
+        $response = new Response();
+        $response->setContent(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    }
 }
