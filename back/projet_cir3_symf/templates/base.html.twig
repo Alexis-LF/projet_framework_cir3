@@ -6,7 +6,7 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+            <link href="{{asset('css/style.css')}}" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
@@ -15,23 +15,33 @@
     </head>
     <body>
         <header>
+            <h1>
+            Portail d'adminstration des échouages
+            </h1>
             <ul>
                 <li>
-                    <a href="{{ path('accueil_index') }}">accueil index</a>
+                    <a href="{{ path('accueil_index') }}">accueil</a>
                 </li>
                 <li>
-                    <a href="{{ path('echouage_index') }}">echouage index</a>
+                    <a href="{{ path('echouage_index') }}">echouages</a>
                 </li>
                 <li>
-                    <a href="{{ path('zone_index') }}">zone index</a>
+                    <a href="{{ path('zone_index') }}">zones</a>
                 </li>
                 <li>
-                    <a href="{{ path('espece_index') }}">espece index</a>
+                    <a href="{{ path('espece_index') }}">espèces</a>
                 </li>
                 <li>
-                    <a href="{{ path('api_index') }}">API index</a>
+                    <a href="{{ path('api_index') }}">API</a>
                 </li>
         </header>
-        {% block body %}{% endblock %}
+
+        <div id="contenu">
+            {% block body %}{% endblock %}
+        </div>
+
+        <footer>
+            <p>Site créé par Noam Nedelec-Salmon et Alexis Le Floch, étuidants en CIR3 à l'ISEN Yncréa Ouest</p>
+        </footer>
     </body>
 </html>

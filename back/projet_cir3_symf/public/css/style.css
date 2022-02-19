@@ -1,0 +1,91 @@
+
+body {
+    font-family: sans-serif;
+    height: 100vh;
+    margin: 0%;
+    
+}
+
+#contenu {
+    margin-top: 160px;
+    padding-bottom: 160px;
+}
+  
+h2 {
+    font-size: 26px;
+    margin: 20px;
+}
+
+.table {
+border-radius: 20px;
+padding: 25px 30px;
+display: block;
+margin-bottom: 25px;
+}
+table thead {
+background-color: #95a5a6;
+font-size: 14px;
+letter-spacing: 0.03em;
+}
+table tr {
+border: 3px solid black;
+}
+table td, table th {
+padding: 10px;
+text-align: center;
+}
+
+select , input[type = submit] , a , button{
+    height: 2.2em;
+    margin: 2px;
+    padding: 0.3em 0.6em;
+    background: white;
+    border: 1px solid #aaaaaa;
+    border-radius: 0.3em;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
+    font-size: 0.85em;
+    white-space: nowrap; 
+    text-decoration: none;
+    color: black;
+}
+button {
+    display: inline;
+    margin: 8px;
+}
+h1 {
+    margin: 0px;
+    padding-bottom: 5px;
+}
+ul {
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    list-style-type : none;
+}
+header {
+    min-height: 60px;
+    max-height:130px;
+    position: fixed;
+    top: 0%;
+}
+footer {
+    position: relative;
+    bottom: O%;
+
+}
+header , footer {
+
+    padding: 10px;
+
+    left: 0%;
+    right: 0%;
+    background-color: #95a5a6;
+}
+
+.recherche_box {
+    display: flex;
+    align-items: flex-end;
+}
+.combobox_part {
+    margin: 5px;
+}

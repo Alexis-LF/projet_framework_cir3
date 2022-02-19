@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Zone index{% endblock %}
+{% block title %}Liste des zones{% endblock %}
 
 {% block body %}
-    <h1>Zone index</h1>
+    <h2>Liste des zones</h2>
+    <a href="{{ path('zone_new') }}">Ajouter un nouvel élément</a>
 
-    <table class="table">
+    <div class="table"><table>
         <thead>
             <tr>
                 <th>Id</th>
@@ -19,8 +20,8 @@
                 <td>{{ zone.id }}</td>
                 <td>{{ zone.zone }}</td>
                 <td>
-                    <a href="{{ path('zone_show', {'id': zone.id}) }}">show</a>
-                    <a href="{{ path('zone_edit', {'id': zone.id}) }}">edit</a>
+                    <a href="{{ path('zone_show', {'id': zone.id}) }}">voir</a>
+                    <a href="{{ path('zone_edit', {'id': zone.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -29,7 +30,6 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-    <a href="{{ path('zone_new') }}">Create new</a>
+    </table></div>
+    <a href="{{ path('zone_new') }}">Ajouter un nouvel élément</a>
 {% endblock %}

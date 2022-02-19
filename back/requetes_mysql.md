@@ -43,7 +43,10 @@ GROUP BY z.zone
 ORDER BY z.zone, s.espece ASC;
 ```
 
-
+Obtenir les dates d'une espèce
+```sql
+SELECT e.date FROM echouage e WHERE e.espece_id = 15 ORDER BY e.date ASC ;
+```
 
 
 Recherche de la quantité d'une espèce choisie dans chaque zones

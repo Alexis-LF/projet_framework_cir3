@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Zone</h1>
 
-    <table class="table">
+    <div class="table"><table>
         <tbody>
             <tr>
                 <th>Id</th>
@@ -16,11 +16,11 @@
                 <td>{{ zone.zone }}</td>
             </tr>
         </tbody>
-    </table>
+    <table></div>
 
     <a href="{{ path('zone_index') }}">back to list</a>
 
-    <a href="{{ path('zone_edit', {'id': zone.id}) }}">edit</a>
+    <a href="{{ path('zone_edit', {'id': zone.id}) }}">modifier</a>
 
     {{ include('zone/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Espece index{% endblock %}
+{% block title %}Liste des espèces{% endblock %}
 
 {% block body %}
-    <h1>Espece index</h1>
-
-    <table class="table">
+    <h2>Liste des espèces</h2>
+    <a href="{{ path('espece_new') }}">Ajouter un nouvel élément</a>
+    <div class="table"><table>
         <thead>
             <tr>
                 <th>Id</th>
@@ -19,8 +19,8 @@
                 <td>{{ espece.id }}</td>
                 <td>{{ espece.espece }}</td>
                 <td>
-                    <a href="{{ path('espece_show', {'id': espece.id}) }}">show</a>
-                    <a href="{{ path('espece_edit', {'id': espece.id}) }}">edit</a>
+                    <a href="{{ path('espece_show', {'id': espece.id}) }}">voir</a>
+                    <a href="{{ path('espece_edit', {'id': espece.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -29,7 +29,6 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-    <a href="{{ path('espece_new') }}">Create new</a>
+    </table></div>
+    <a href="{{ path('espece_new') }}">Ajouter un nouvel élément</a>
 {% endblock %}

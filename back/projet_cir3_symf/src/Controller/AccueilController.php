@@ -20,6 +20,7 @@ class AccueilController extends AbstractController
     {
         $especes = $em ->getRepository(Espece::class) ->findAll();
         $zones = $em ->getRepository(Zone::class) ->findAll();
+
         return $this->render('accueil/index.html.twig', [
             'zones' => $zones,
             'especes' => $especes,
@@ -58,9 +59,34 @@ class AccueilController extends AbstractController
         // 1re requête
         // affichage du nb d'animaux d'une espèce particulière
         // par date et par zone
-        $resultats = $em ->getRepository(Echouage::class) 
-            ->get_echouages_espece($espece_id ,$zone_id);
-        
+
+        $tab_par_dates = array();
+        if ($zone_id == 0)
+        {
+            $zone_init = 1;
+            $derniere_zone = $nb_zones;
+        }
+        else
+        {
+            $zone_init = $zone_id;
+            $derniere_zone = $zone_id;
+        }
+        $min = $em ->getRepository(Echouage::class) ->date_min($espece_id);
+        $max = $em ->getRepository(Echouage::class) ->date_max($espece_id);
+        for ($date_i=$min; $date_i <= $max; $date_i++) 
+        {
+            $nb_echouages_par_zone = array();
+            $zone_i = $zone_init;
+            while($zone_i <= $derniere_zone )
+            {
+                $nb_echouages_par_zone[$zone_i] = $em 
+                    ->getRepository(Echouage::class) 
+                    ->get_nb_date_zone($espece_id,$zone_i,$date_i);
+                $zone_i++;
+            }
+            $tab_par_dates[$date_i] = $nb_echouages_par_zone;
+        }
+
 
         // 2nde requête
         // stats des zones
@@ -93,6 +119,7 @@ class AccueilController extends AbstractController
         $especes = $em ->getRepository(Espece::class) ->findAll();
         $zones = $em ->getRepository(Zone::class) ->findAll();
         return $this->render('accueil/recherche.html.twig', [
+            'tab_par_dates' => $tab_par_dates,
             'zones' => $zones,
             'especes' => $especes,
             'zone_select' => [
@@ -103,7 +130,6 @@ class AccueilController extends AbstractController
                 "id" => $espece_id,
                 "espece" => $espece
             ],
-            'resultats' => $resultats,
             'stats_zones' => $stats_par_zones,
         ]);
     }

@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Espece</h1>
 
-    <table class="table">
+    <div class="table"><table>
         <tbody>
             <tr>
                 <th>Id</th>
@@ -16,11 +16,11 @@
                 <td>{{ espece.espece }}</td>
             </tr>
         </tbody>
-    </table>
+    <table></div>
 
     <a href="{{ path('espece_index') }}">back to list</a>
 
-    <a href="{{ path('espece_edit', {'id': espece.id}) }}">edit</a>
+    <a href="{{ path('espece_edit', {'id': espece.id}) }}">modifier</a>
 
     {{ include('espece/_delete_form.html.twig') }}
 {% endblock %}

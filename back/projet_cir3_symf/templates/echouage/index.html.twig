@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Echouage index{% endblock %}
+{% block title %}Liste des échouages{% endblock %}
 
 {% block body %}
-    <h1>Echouage index</h1>
+    <h2>Liste des échouages</h2>
+    <a href="{{ path('echouage_new') }}">Ajouter un nouvel élément</a>
 
-    <table class="table">
+    <div class="table"><table>
         <thead>
             <tr>
                 <th>Id</th>
@@ -29,8 +30,8 @@
                 <td>{{ echouage.Espece.id }}</td>
                 <td>{{ echouage.Espece.espece }}</td>
                 <td>
-                    <a href="{{ path('echouage_show', {'id': echouage.id}) }}">show</a>
-                    <a href="{{ path('echouage_edit', {'id': echouage.id}) }}">edit</a>
+                    <a href="{{ path('echouage_show', {'id': echouage.id}) }}">voir</a>
+                    <a href="{{ path('echouage_edit', {'id': echouage.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -39,7 +40,7 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table></div>
 
-    <a href="{{ path('echouage_new') }}">Create new</a>
+    <a href="{{ path('echouage_new') }}">Ajouter un nouvel élément</a>
 {% endblock %}

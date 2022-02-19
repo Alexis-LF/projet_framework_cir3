@@ -89,6 +89,110 @@ class EchouageRepository extends ServiceEntityRepository
         return $resultats;
     }
 
+    public function date_min($espece_id)
+    {
+        return $this->createQueryBuilder('e')
+        ->select('e.date')
+        ->leftJoin(
+            Espece::class,
+            's',
+            \Doctrine\ORM\Query\Expr\Join::WITH,
+            'e.espece = s.id'
+        )
+        ->where('s.id=:espece_id')   
+        ->setParameter('espece_id', $espece_id)
+        ->orderBy('e.date', 'ASC')
+        ->getQuery()
+        ->getResult()[0]["date"];      
+    }
+
+    public function date_max($espece_id)
+    {
+        return $this->createQueryBuilder('e')
+        ->select('e.date')
+        ->leftJoin(
+            Espece::class,
+            's',
+            \Doctrine\ORM\Query\Expr\Join::WITH,
+            'e.espece = s.id'
+        )
+        ->where('s.id=:espece_id')   
+        ->setParameter('espece_id', $espece_id)
+        ->orderBy('e.date', 'DESC')
+        ->getQuery()
+        ->getResult()[0]["date"];      
+    }    
+    
+    public function get_tab_date_zone($espece_id,$zone_id)
+    {
+        $tab = array();
+        $min = $this ->date_min($espece_id);
+        $max = $this ->date_max($espece_id);
+        for ($i=$min; $i <= $max; $i++) 
+        { 
+            $nb_echouages = (int)$this->createQueryBuilder('e')
+                ->select('SUM(e.nombre) AS nombre')
+                ->leftJoin(
+                    Zone::class,
+                    'z',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'e.zone = z.id'
+                )
+                ->leftJoin(
+                    Espece::class,
+                    's',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'e.espece = s.id'
+                )
+                ->where('s.id=:espece_id')   
+                ->setParameter('espece_id', $espece_id)
+                ->andWhere('z.id=:zone_id')   
+                ->setParameter('zone_id', $zone_id)
+                ->andWhere('e.date=:date')   
+                ->setParameter('date', $i)            
+                ->getQuery()
+                ->getResult()[0]["nombre"];
+            array_push(
+                $tab,
+                [
+                    "date" => $i,
+                    "nombre" => $nb_echouages
+                ]
+            );
+        }
+        return $tab;
+    }
+
+    public function get_nb_date_zone($espece_id,$zone_id,$date)
+    {
+        return (int)$this->createQueryBuilder('e')
+            ->select('SUM(e.nombre) AS nombre')
+            ->leftJoin(
+                Zone::class,
+                'z',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'e.zone = z.id'
+            )
+            ->leftJoin(
+                Espece::class,
+                's',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'e.espece = s.id'
+            )
+            ->where('s.id=:espece_id')
+            ->setParameter('espece_id', $espece_id)
+            ->andWhere('z.id=:zone_id')
+            ->setParameter('zone_id', $zone_id)
+            ->andWhere('e.date=:date')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getResult()[0]["nombre"];
+    }
+
+
+
+
+
     // /**
     //  * @return Echouage[] Returns an array of Echouage objects
     //  */
