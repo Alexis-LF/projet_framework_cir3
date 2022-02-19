@@ -102,6 +102,7 @@ class EchouageRepository extends ServiceEntityRepository
         ->where('s.id=:espece_id')   
         ->setParameter('espece_id', $espece_id)
         ->orderBy('e.date', $order_by)
+        ->groupBy('e.date')
         ->getQuery()
         ->getResult();
         
