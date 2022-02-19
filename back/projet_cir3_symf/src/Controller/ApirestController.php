@@ -31,8 +31,11 @@ class ApirestController extends AbstractController
                 "/echouages_espece/{espece_id}/zone/{zone_id}",
                 "/espece/",
                 "/espece/{espece_id}",
+                "/espece/{espece_id}/date/",
+                "/espece/{espece_id}/date/{min_ou_max}",                   
                 "/zone/",
-                "/zone/{zone_id}"                
+                "/zone/{zone_id}",
+
             ],
         ];
         $response = new Response();
@@ -90,7 +93,7 @@ class ApirestController extends AbstractController
     /**
      * @Route("/espece/{id}", name="espece_id")
      */
-    public function espece_id($id,EntityManagerInterface $em): Response
+    public function espece_id($id, EntityManagerInterface $em): Response
     {
         $data = $em ->getRepository(Espece::class) ->get($id);
     
@@ -99,8 +102,43 @@ class ApirestController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Access-Control-Allow-Origin', '*');
         return $response;
-    }    
+    } 
 
+    /**
+     * @Route("/espece/{id}/date", name="espece_dates")
+     */
+    public function espece_dates($id, EntityManagerInterface $em): Response
+    {
+        $data = $em ->getRepository(Echouage::class) ->tab_dates($id, "ASC");
+        $response = new Response();
+        $response->setContent(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    } 
+
+    /**
+     * @Route("/espece/{id}/date/{min_ou_max}", name="espece_date_min_max")
+     */
+    public function espece_date_min_max($id,$min_ou_max, EntityManagerInterface $em): Response
+    {
+        $data = $em ->getRepository(Echouage::class);
+        if ($min_ou_max == "min"){
+            $data = $data ->date_min($id);
+        }
+        elseif ($min_ou_max == "max"){
+            $data = $data ->date_max($id);
+        }
+        else {
+            $data = NULL;
+        }
+    
+        $response = new Response();
+        $response->setContent(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        return $response;
+    } 
     /**
      * @Route("/zone", name="zones_list")
      */
