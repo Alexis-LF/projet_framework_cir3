@@ -30,9 +30,6 @@ class ApirestController extends AbstractController
     public function index(): Response
     {
         $data = [
-            "l'API marche" => True,
-            "liste des endpoints" =>
-            [
                 "/api",
                 "/api/echouages/espece/{espece_id}",
                 "/api/echouages/espece/{espece_id}/zone/{zone_id}",
@@ -48,7 +45,6 @@ class ApirestController extends AbstractController
                 "/api/zone/",
                 "/api/zone/{zone_id}",
 
-            ],
         ];
         $response = new Response();
         $response->setContent(json_encode($data));
