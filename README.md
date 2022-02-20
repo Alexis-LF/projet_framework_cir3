@@ -1,6 +1,9 @@
-# projet_framework_cir3
+# projet framework cir3
+Noam Nedelec-Salmon *<noam.nedelec-salmon@isen-ouest.yncrea.fr>*
 
-# Livrables
+Alexis Le Floch *<alexis.le-floch@isen-ouest.yncrea.fr>*
+
+# Livrables  -> SECTION À SUPPRIMER 
 Vous devez fournir les éléments suivants en livraison de votre projet :
  - l’ensemble des sources (code React, code Symfony et export complet de 
 la base de données)
@@ -10,6 +13,22 @@ la base de données)
    - les urls utilisées
    - le format d’accès à l’api et le format de retour
  - le code doit être commenté
+
+# versions
+Version de Symfony : **4.4**
+
+Serveur de base de données : **MySQL** ou **MariaDB**
+
+# Emplacement des fichiers
+## Front
+Code React dans /front
+
+## Back et Web Service
+Code Symfony dans /back
+
+## Base de données
+export MySQL de la base de données dans /bdd
+
 
 # Modèles de la base de données
 ## tables
@@ -57,8 +76,17 @@ Table **zone** :
 
 # virtualhosts créés
 
+
+
+
 # urls utilisés
+## front
+
+
+
+
 ## back
+
 ### Accueil
  - **/** : accueil du back et menu de recherche
  - **/recherche?zone=`{zone_id}`&espece=`{espece_id}`** : recherche d'une espèce dans une zone sélectionnée
@@ -83,28 +111,189 @@ Table **zone** :
  - **/zone/`{id}`** : détails d'une zone
  - **/zone/`{id}`/edit** : modifier une zone
 
-## Web service
+# Format d'utilisation de l'API
 
-### Accueil de l'API
- - **/api** : liste des endpoints
+## Accueil de l'API
+### liste des endpoints
+#### utilisation :
+**/api**
+#### retour :
+```json
+[
+  str,
+]
+```
 
-### échouages groupés par date
- - **/api/echouages/espece/`{espece_id}`** : tous les échouages d'une espèce groupés par date
- - **/api/echouages/espece/`{espece_id}`/zone/`{zone_id}`** : tous les échouages d'une espèce dans une zone groupés par date
+## échouages groupés par date
 
-### échouages groupés par date et affichés par zone
- - **/api/echouages/espece/`{espece_id}`/zones/date** tous les échouages d'une espsèce groupés par date et affichés par zone
- - **/api/echouages/espece/`{espece_id}`/zone/`{zone_id}`/date** tous les échouages d'une espèce dans une zone groupés par date et affichés par zone
- - **/api/echouages/espece/`{espece_id}`/zones/date/`{min}`/`{max}`** les échouages d'une espsèce pour chaque date parmi les dates minimales et maximales groupés par date et affichés par zone
- - **/api/echouages/espece/`{espece_id}`/zone/`{zone_id}`/date/`{min}`/`{max}`** les échouages d'une espèce dans une zone pour chaque date parmi les dates minimales et maximales groupés par date et affichés par zone
+### tous les échouages d'une espèce groupés par date
+#### utilisation :
+**/api/echouages/espece/`{espece_id}`**
+#### retour :
+```json
+[
+  {
+    "date": int,
+    "zone": str,
+    "zone_id": int,
+    "nombre": int
+  },
+]
+```
+### tous les échouages d'une espèce dans une zone groupés par date
+#### utilisation :
+**/api/echouages/espece/`{espece_id}`/zone/`{zone_id}`**
+#### retour :
+```json
+[
+  {
+    "date": int,
+    "zone": str,
+    "zone_id": int,
+    "nombre": int
+  },
+]
+```
 
-## Espèces
- - **/api/espece** : liste des espèces
- - **/api/espece/`{espece_id}`** : détails d'une espèce
- - **/api/espece/`{espece_id}`/date/** liste des dates où il y a eu un échouage pour cette espèce
- - **/api/espece/`{espece_id}`/date/min** date la plus vielle d'un échouage de cette espèce
- - **/api/espece/`{espece_id}`/date/min** date la plus récente d'un échouage de cette espèce
+## échouages groupés par date et affichés par zone
 
-## Zones
- - **/api/zone** : liste des zones
- - **/api/zone/`{zone_id}`** : détails d'une zone
+### tous les échouages d'une espsèce groupés par date et affichés par zone
+#### utilisation :
+**/api/echouages/espece/`{espece_id}`/zones/date**
+#### retour :
+```json
+{
+  "{date}": {
+    "{zone_id}": int,
+  },
+}
+```
+
+### tous les échouages d'une espèce dans une zone groupés par date et affichés par zone
+#### utilisation :
+**/api/echouages/espece/`{espece_id}`/zone/`{zone_id}`/date**
+#### retour :
+```json
+{
+  "{date}": {
+    "{zone_id}": int
+  },
+}
+```
+
+### les échouages d'une espsèce pour chaque date parmi les dates minimales et maximales groupés par date et affichés par zone
+#### utilisation :
+**/api/echouages/espece/`{espece_id}`/zones/date/`{min}`/`{max}`** 
+#### retour :
+```json
+{
+  "{date}": {
+    "{zone_id}": int,
+  },
+}
+```
+
+### les échouages d'une espèce dans une zone pour chaque date parmi les dates minimales et maximales groupés par date et affichés par zone
+#### utilisation :
+**/api/echouages/espece/`{espece_id}`/zone/`{zone_id}`/date/`{min}`/`{max}`** 
+#### retour :
+```json
+{
+  "{date}": {
+    "{zone_id}": int
+  },
+}
+```
+
+
+### Espèces
+
+### liste des espèces
+#### utilisation :
+**/api/espece**
+#### retour :
+```json
+[
+  [
+    {
+      "id": int,
+      "espece": str
+    }
+  ],
+]
+```
+
+### détails d'une espèce
+#### utilisation :
+**/api/espece/`{espece_id}`**
+#### retour :
+```json
+[
+  [
+    {
+      "id": int,
+      "espece": str
+    }
+  ]
+]
+```
+
+### liste des dates où il y a eu un échouage pour cette espèce
+#### utilisation :
+**/api/espece/`{espece_id}`/date/**
+#### retour :
+```json
+[
+  {
+    "date": int
+  },
+]
+```
+
+### date la plus vielle d'un échouage de cette espèce
+#### utilisation :
+**/api/espece/`{espece_id}`/date/min**
+#### retour :
+```json
+int
+```
+
+### date la plus récente d'un échouage de cette espèce
+#### utilisation :
+**/api/espece/`{espece_id}`/date/max**
+#### retour :
+```json
+int
+```
+
+### Zones
+
+### liste des zones
+#### utilisation :
+**/api/zone**
+#### retour :
+```json
+[
+  [
+    {
+      "id": int,
+      "zone": str
+    }
+  ],
+]
+```
+
+### détails d'une zone
+#### utilisation :
+**/api/zone/`{zone_id}`**
+#### retour :
+```json
+[
+  [
+    {
+      "id": int,
+      "zone": str
+    }
+  ]
+]
+```
