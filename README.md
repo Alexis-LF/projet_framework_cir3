@@ -17,6 +17,8 @@ la base de données)
 # versions
 Version de Symfony : **4.4**
 
+Version de PHP : **8**
+
 Serveur de base de données : **MySQL** ou **MariaDB**
 
 # Emplacement des fichiers
