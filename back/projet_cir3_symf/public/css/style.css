@@ -3,13 +3,13 @@ body {
     font-family: sans-serif;
     height: 100vh;
     margin: 0%;
-    background-color: #d84fcd;
-    
+    background-color: rgb(149, 165, 166);
 }
 
 #contenu {
-    margin-top: 160px;
+    padding-top: 160px;
     padding-bottom: 160px;
+    background-color: rgb(243, 241, 241);
 }
   
 h2 {
@@ -18,29 +18,45 @@ h2 {
 }
 
 .table {
-border-radius: 20px;
-padding: 25px 30px;
-display: block;
-margin-bottom: 25px;
+    margin: 25px 30px;
+    padding: 0%;
+    display: block;
 }
-table thead {
-background-color: #95a5a6;
-font-size: 14px;
-letter-spacing: 0.03em;
+table {
+    border-collapse: collapse;
+}
+thead {
+    background-color: rgb(149, 165, 166);
+    font-size: 14px;
+    letter-spacing: 0.03em;
 }
 
 
-table td, table th {
-padding: 10px;
-text-align: center;
+td, th {
+    padding: 10px;
+    text-align: center;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+tr:last-child > td, tr:last-child > th {
+    border-bottom: 1px solid white;
+}
+tr:first-child > td, tr:first-child > th {
+    border-top: 1px solid white;
+}
+td:hover, th:hover {
+    background-color: rgba(149, 165, 166,0.2);    
+}
+tr:hover {
+    background-color: rgba(149, 165, 166,0.1);    
 }
 
 select , input[type = submit] , #contenu a , header a , button{
+    border-style: none;
     display: inline-block;
     /* height: 2.2em; */
     padding: 0.3em 0.6em;
     background: white;
-    border: 1px solid #aaaaaa;
     border-radius: 0.3em;
     box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.4);
     font-size: 0.85em;
@@ -76,7 +92,8 @@ footer {
 }
 footer a {
     text-decoration : none;
-
+    color: inherit;
+    font-style: italic;
 }
 header , footer {
 
@@ -84,7 +101,7 @@ header , footer {
 
     left: 0%;
     right: 0%;
-    background-color: #95a5a6;
+    background-color: rgb(149, 165, 166);
 }
 
 .recherche_box {
@@ -93,8 +110,4 @@ header , footer {
 }
 .combobox_part {
     margin: 5px;
-}
-
-#mon_mot {
-    text-decoration: underline;
 }
