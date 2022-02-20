@@ -43,7 +43,8 @@ class ApirestController extends AbstractController
                 "/api/espece/",
                 "/api/espece/{espece_id}",
                 "/api/espece/{espece_id}/date/",
-                "/api/espece/{espece_id}/date/{min_ou_max}",                   
+                "/api/espece/{espece_id}/date/min",                   
+                "/api/espece/{espece_id}/date/max",                   
                 "/api/zone/",
                 "/api/zone/{zone_id}",
 
