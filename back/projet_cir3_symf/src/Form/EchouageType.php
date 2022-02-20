@@ -1,4 +1,11 @@
 <?php
+/**
+ * Formulaire de l'entité Echouage
+ *
+ * @package    Projet Framework
+ * @author     Alexis Le Floch <alexis.le-floch@isen-ouest.yncrea.fr> , Noam Nedelec-Salmon <noam.nedelec-salmon@isen-ouest.yncrea.fr>
+ * @version    1.0 
+ */
 
 namespace App\Form;
 
