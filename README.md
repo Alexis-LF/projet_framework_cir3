@@ -3,17 +3,6 @@ Noam Nedelec-Salmon *<noam.nedelec-salmon@isen-ouest.yncrea.fr>*
 
 Alexis Le Floch *<alexis.le-floch@isen-ouest.yncrea.fr>*
 
-# Livrables  -> SECTION À SUPPRIMER 
-Vous devez fournir les éléments suivants en livraison de votre projet :
- - l’ensemble des sources (code React, code Symfony et export complet de 
-la base de données)
- - une documentation :
-   - décrivant le modèle de bdd et les modifications éventuelles réalisées
-   - les virtualhost utilisés (fournir le(s) fichiers de virtualhost)
-   - les urls utilisées
-   - le format d’accès à l’api et le format de retour
- - le code doit être commenté
-
 # versions
 Version de Symfony : **4.4**
 
@@ -146,11 +135,9 @@ Listen 8080
 # urls utilisés
 ## front
 
-**domaine**:8080/
+Seule la racine est utilisée en front, il n'y a qu'une seule page.
 
 ## back
-
-**domaine/api/**
 
 ### Accueil
  - **/** : accueil du back et menu de recherche
