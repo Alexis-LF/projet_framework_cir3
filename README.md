@@ -19,6 +19,10 @@ Version de Symfony : **4.4**
 
 Version de PHP : **8**
 
+Version de React : **17.0**
+
+Version de npm : **8.4**
+
 Serveur de base de données : **MySQL** ou **MariaDB**
 
 # Emplacement des fichiers
@@ -78,16 +82,75 @@ Table **zone** :
 
 # virtualhosts créés
 
+## Symfony (sur la base du .htacess du packet composer symfony/apache-pack)
+
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/projet_framework_cir3/back/projet_cir3_symf/public
+
+        ErrorLog ${APACHE_LOG_DIR}/echouages-error.log
+        CustomLog ${APACHE_LOG_DIR}/echouages-access.log combined
+
+        Header set Access-Control-Allow-Origin "*"
+
+        <Directory /var/www/html/projet_framework_cir3/back/projet_cir3_symf/public>
+                DirectoryIndex index.php
+
+                <IfModule mod_negotiation.c>
+                    Options -MultiViews
+                </IfModule>
+
+                <IfModule mod_rewrite.c>
+                    RewriteEngine On
+
+                    RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
+                    RewriteRule .* - [E=BASE:%1]
+
+                    RewriteCond %{HTTP:Authorization} .+
+                    RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
+
+                    RewriteCond %{ENV:REDIRECT_STATUS} =""
+                    RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
+
+                    RewriteCond %{REQUEST_FILENAME} !-f
+                    RewriteRule ^ %{ENV:BASE}/index.php [L]
+                </IfModule>
+
+                <IfModule !mod_rewrite.c>
+                    <IfModule mod_alias.c>
+                        RedirectMatch 307 ^/$ /index.php/
+                    </IfModule>
+                </IfModule>
+        </Directory>
+</VirtualHost>
+```
+
+## React
+
+```
+Listen 8080
 
 
+<VirtualHost *:8080>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/projet_framework_cir3/front/build
+
+        ErrorLog ${APACHE_LOG_DIR}/echouages-error.log
+        CustomLog ${APACHE_LOG_DIR}/echouages-access.log combined
+</VirtualHost>
+```
+
+(Ces vhosts étaient utilisés sur une machine de développement, il était donc important de différencier les ports car l'accès aux deux se faisait via "localhost")
 
 # urls utilisés
 ## front
 
-
-
+**domaine**:8080/
 
 ## back
+
+**domaine/api/**
 
 ### Accueil
  - **/** : accueil du back et menu de recherche
